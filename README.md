@@ -1,5 +1,5 @@
 
-# Angular Chat 🔥 - WIP 
+# Angular Chat - WIP 
 
 A chat application built with Angular 6 + NodeJS.
 
