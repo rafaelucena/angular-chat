@@ -1,0 +1,60 @@
+<ng-container *ngIf="messagesRequestStatus === Status.PENDING || messagesRequestStatus === Status.ERROR">
+  <div class="messages-spinner-container">
+    <ng-container *ngIf="messagesRequestStatus === Status.PENDING">
+      <mat-spinner [diameter]="42"></mat-spinner>
+      <p>Connecting to the server...</p>
+    </ng-container>
+
+    <ng-container *ngIf="messagesRequestStatus === Status.ERROR">
+      <p>{{messagesRequestErrorMessage}}</p>
+      <button mat-raised-button
+              (click)="requestInitialMessages()">Retry
+      </button>
+    </ng-container>
+
+  </div>
+</ng-container>
+
+<div class="chat-container" *ngIf="messagesRequestStatus === Status.SUCCESS">
+  <div class="chat-component" #chatComponent>
+    <!-- Wrapper needed for child dynamic height -->
+    <!-- Docs: https://stackoverflow.com/questions/46997189/why-height-100-doesnt-work -->
+    <div class="wrapper-absolute">
+      <mat-list>
+        <mat-list-item *ngFor="let message of messages" class="mat-list-item-word-wrap">
+          <h6 matLine>[{{message.date | date:'shortTime'}}] {{message.nickname}}:</h6>
+          <p matLine>
+            <span>{{message.message}}</span>
+          </p>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+
+  <div class="message-row">
+    <form (ngSubmit)="sendMessage(messageForm)" #messageForm="ngForm">
+      <mat-form-field>
+        <textarea matInput
+                  required
+                  placeholder="Message"
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="5"
+                  ngModel
+                  name="message"
+                  #message="ngModel"
+                  (keydown.enter)="sendMessage(messageForm); false"></textarea>
+      </mat-form-field>
+
+      <button mat-fab
+              color="primary"
+              [disabled]="!messageForm.form.valid"
+              type="submit">
+        <mat-icon matListIcon>send</mat-icon>
+      </button>
+    </form>
+  </div>
+</div>
+
+
+

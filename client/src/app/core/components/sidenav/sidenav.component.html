@@ -1,0 +1,7 @@
+<mat-sidenav [opened]="open"
+             (onOpen)="openSidenav.emit()"
+             (onClose)="closeSidenav.emit()">
+  <mat-list>
+    <ng-content></ng-content>
+  </mat-list>
+</mat-sidenav>

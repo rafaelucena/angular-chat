@@ -1,0 +1,87 @@
+<div class="app-component">
+  <header>
+    <ac-toolbar [color]="'primary'"
+                (openMenu)="toggleSidenav()">
+      <mat-toolbar-row>
+        <mat-icon matListIcon class="spacing--right">whatshot</mat-icon>
+        <p> Angular Chat</p>
+      </mat-toolbar-row>
+    </ac-toolbar>
+  </header>
+
+  <mat-sidenav-container>
+    <mat-sidenav [opened]="isSidenavOpen"
+                 (closed)="isSidenavOpen = false">
+      <mat-list>
+
+        <mat-list-item *ngIf="!isChatting"
+                       (click)="moveToRoute(['/'])">
+          <mat-icon matListIcon>input</mat-icon>
+          <a mat-list-item>Join</a>
+        </mat-list-item>
+
+        <mat-list-item *ngIf="isChatting"
+                       (click)="moveToRoute(['/', 'chat'])">
+          <mat-icon matListIcon>chat</mat-icon>
+          <a mat-list-item>Chatroom</a>
+        </mat-list-item>
+
+        <mat-list-item (click)="moveToRoute(['/', 'about'])">
+          <mat-icon matListIcon>info</mat-icon>
+          <a mat-list-item>About</a>
+        </mat-list-item>
+
+        <ng-container *ngIf="isChatting">
+          <mat-list-item (click)="logout()">
+            <mat-icon matListIcon>eject</mat-icon>
+            <a mat-list-item>Logout</a>
+          </mat-list-item>
+
+          <mat-list-item class="default-cursor">
+            <h4 mat-subheader class="centered">Users online <span *ngIf="usersList">&nbsp;({{usersList.length}})</span></h4>
+          </mat-list-item>
+
+          <ng-container *ngIf="usersListRequestStatus === Status.PENDING">
+            <mat-list-item class="default-cursor">
+              <p mat-line>
+                <mat-spinner class="centered" [diameter]="28"></mat-spinner>
+              </p>
+            </mat-list-item>
+          </ng-container>
+
+          <ng-container *ngIf="usersListRequestStatus === Status.ERROR">
+            <div class="container">
+              <p>{{ usersListErrorMessage }}</p>
+              <button mat-raised-button
+                      (click)="requestUsersList()">Retry
+              </button>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="usersListRequestStatus === Status.SUCCESS">
+            <mat-list dense>
+              <mat-list-item *ngFor="let user of usersList" class="default-cursor">
+                <mat-icon mat-list-icon>perm_identity</mat-icon>
+                <p mat-line>{{user.nickname}}</p>
+              </mat-list-item>
+            </mat-list>
+          </ng-container>
+        </ng-container>
+      </mat-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <!-- Wrapper needed for child dynamic height -->
+      <!-- Docs: https://stackoverflow.com/questions/46997189/why-height-100-doesnt-work -->
+      <div class="flex-height-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <!--<footer>-->
+  <!--<mat-toolbar [color]="'basic'">-->
+  <!--<p>&copy; {{year}} - Made by <a href="https://github.com/arthur-melo" target="_blank">arthur-melo</a></p>-->
+  <!--</mat-toolbar>-->
+  <!--</footer>-->
+</div>

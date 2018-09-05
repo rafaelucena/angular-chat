@@ -1,0 +1,45 @@
+<div class="home-component">
+  <mat-card>
+    <mat-card-title>Welcome!</mat-card-title>
+
+    <mat-card-content>
+      <h3 mat-subheader>Enter your nickname to join:</h3>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <form (ngSubmit)="joinRoom(nickname)" #userForm="ngForm">
+        <mat-form-field>
+          <input matInput
+                 required
+                 pattern="[\da-zA-Z]{1,32}"
+                 placeholder="Nickname"
+                 [disabled]="joinChatStatus === Status.PENDING"
+                 ngModel
+                 name="nickname"
+                 #nickname="ngModel">
+        </mat-form-field>
+
+        <button *ngIf="joinChatStatus === Status.INITIAL ||  joinChatStatus === Status.ERROR"
+                mat-raised-button
+                type="submit"
+                [disabled]="!userForm.form.valid"
+                [color]="userForm.form.valid? 'primary' : 'disabled'">
+          Send
+        </button>
+
+        <ng-container *ngIf="joinChatStatus === Status.PENDING">
+          <div class="spinner-container">
+            <mat-progress-spinner
+              class="mat-spinner"
+              [color]="'primary'"
+              [diameter]="32"
+              [mode]="'indeterminate'">
+            </mat-progress-spinner>
+          </div>
+        </ng-container>
+      </form>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+

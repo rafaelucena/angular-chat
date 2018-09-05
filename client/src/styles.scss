@@ -1,0 +1,32 @@
+/* You can add global styles to this file, and also import other style files */
+
+// Angular material default theme
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+// Material design icons
+@import '~material-design-icons/iconfont/material-icons.css';
+
+// App-wide scss
+html,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, Roboto, Segoe UI, 'Helvetica Neue', Helvetica,
+    Arial, sans-serif;
+
+  -webkit-font-smoothing: antialiased;
+  -ms-overflow-style: none;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+
+  background: #dddddd;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}

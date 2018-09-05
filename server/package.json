@@ -1,0 +1,86 @@
+{
+  "name": "angular-chat-server",
+  "description": "Sample chat API using Express.",
+  "version": "0.0.1",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "repository": "https://github.com/arthur-melo/angular-chat",
+  "private": true,
+  "scripts": {
+    "start": "npm run build && node dist/index.js",
+    "start-prod": "npm run build && cross-env NODE_ENV=production node dist/index.js",
+    "start-test": "npm run build && cross-env NODE_ENV=test node dist/index.js",
+    "build": "npm run clean && tsc -p ./tsconfig.build.json",
+    "clean": "rimraf dist/",
+    "clean-install": "rimraf package-lock.json dist/ node_modules/ && npm install",
+    "lint": "prettier --write --config .prettierrc \"**/*.{ts, json, md}\" && tslint --fix --project .",
+    "test": "cross-env NODE_ENV=test jest",
+    "test-watch": "cross-env NODE_ENV=test jest --watchAll",
+    "test-cov": "cross-env NODE_ENV=test jest --coverage ./test/**/*.spec.ts",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "linters": {
+      "**/*.{ts, json, scss, md}": [
+        "prettier --write --config .prettierrc"
+      ],
+      "**/*.ts": [
+        "tslint --project . --fix"
+      ]
+    }
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "node"
+    ],
+    "testURL": "http://localhost/"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "chalk": "^2.4.1",
+    "express": "^4.16.3",
+    "express-session": "^1.15.6",
+    "helmet": "^3.13.0",
+    "knex": "^0.15.2",
+    "query-string": "^6.1.0",
+    "sqlite3": "^4.0.2",
+    "validator": "^10.7.0",
+    "winston": "^3.0.0",
+    "ws": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "@types/express-session": "^1.15.10",
+    "@types/helmet": "0.0.40",
+    "@types/jest": "^23.3.1",
+    "@types/knex": "^0.14.23",
+    "@types/morgan": "^1.7.35",
+    "@types/node-fetch": "^2.1.2",
+    "@types/query-string": "^6.1.0",
+    "@types/uuid": "^3.4.4",
+    "@types/validator": "^9.4.1",
+    "@types/winston": "^2.4.4",
+    "@types/ws": "^6.0.0",
+    "bufferutil": "^4.0.0",
+    "connect-session-knex": "^1.4.0",
+    "cross-env": "^5.2.0",
+    "husky": "^0.14.3",
+    "jest": "^23.5.0",
+    "lint-staged": "^7.2.2",
+    "morgan": "^1.9.0",
+    "node-fetch": "^2.2.0",
+    "prettier": "^1.14.2",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^23.1.4",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "^3.0.3",
+    "utf-8-validate": "^5.0.1"
+  }
+}
